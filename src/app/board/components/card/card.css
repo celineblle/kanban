@@ -1,0 +1,12 @@
+#uniqueCard {
+    margin: 2%;
+    padding: 5%;
+    background-color: white;
+    border-radius: 5px;
+    border: solid 2px black;
+}
+
+#ticketTitle {
+    margin: 0;
+    margin-bottom: 5px;
+}

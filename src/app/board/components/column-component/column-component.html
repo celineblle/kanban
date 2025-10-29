@@ -1,0 +1,7 @@
+<div id="uniqueColumn"> 
+    <h4 id="titleColumn">{{column.title}}</h4>
+    <div id="list">
+        <app-card [ticket]="tickets[0]" />
+    </div>
+    <button id="addTicketColumnButton" (click)="addTicket.emit()">Add Ticket</button>
+</div>

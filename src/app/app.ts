@@ -1,12 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Header } from './layout/components/header/header';
+import { BoardPage } from './board/components/board-page/board-page';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [Header, BoardPage],
+  template: `<div>
+    <app-header />
+    <app-board-page />
+  </div>`,
 })
 export class App {
-  protected readonly title = signal('kanban');
 }

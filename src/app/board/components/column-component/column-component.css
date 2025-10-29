@@ -1,0 +1,32 @@
+#uniqueColumn {
+    background-color: antiquewhite;
+    margin: 1%;
+    padding: 1%;
+    width: 15%;
+    height: fit-content;
+    border-radius: 20px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+#titleColumn {
+    margin: 2px;
+}
+
+#addTicketColumnButton {
+    margin: 2% 3%;
+    border: none;
+    border-radius: 5px;
+    padding: 2%;
+    width: 90%;
+    background-color: white;
+}
+
+#addTicketColumnButton:hover { 
+    background-color: lightblue;
+}
+
+#addTicketColumnButton:active {
+    background-color: lightcoral;
+}
