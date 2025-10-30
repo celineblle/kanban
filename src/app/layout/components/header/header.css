@@ -1,5 +1,5 @@
 #headerComponent {
-    width: 100%;
+    width: calc(100% - (2%*2));
     height: 15%;
     border: solid 1px blue;
     display: flex;

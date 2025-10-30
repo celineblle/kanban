@@ -1,7 +1,17 @@
-<div id="wrapper">
+<div id="wrapperAllColumn">
 <div id="column-wrapper">
-    <app-column-component [column]="columns[0]" [tickets]="tickets" 
-    (addTicket)="addTicket(columns[0].id)"
+
+    @for(column of columns; track column.id) {
+    <app-column-component id="columnComponent" [column]="column"
+     [tickets]="ticketByColumnId[column.id]" 
+    (addTicket)="addTicket(column.id)"
+    (reorderTicket)="onReorderTicket($event)"
     />
+    } 
+    @empty {
+        <p>No column</p>
+    }
+
+
 </div>
 </div>

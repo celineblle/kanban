@@ -1,8 +1,7 @@
 #uniqueColumn {
     background-color: antiquewhite;
-    margin: 1%;
-    padding: 1%;
-    width: 15%;
+    padding: 4%;
+    margin: 2%;
     height: fit-content;
     border-radius: 20px;
     display: flex;
@@ -29,4 +28,14 @@
 
 #addTicketColumnButton:active {
     background-color: lightcoral;
+}
+
+[appDraggable] {
+    &.drag-entered {
+        box-shadow: 0 0 10px 2px #59c9db;
+    }
+
+    &.dragging {
+        opacity: 0.4;
+    }
 }
