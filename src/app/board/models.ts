@@ -19,3 +19,13 @@ export type Column = {
 export type ColumnWithTickets = Column & { tickets: Ticket[] };
 
 export type Board = { columns: Column[]; tickets: Ticket[] };
+
+export type DragDropLocation = {
+  columnId: string;
+  ticketId: string;
+}
+
+export type DragDropPayload = [
+  DragDropLocation, 
+  DragDropLocation
+];

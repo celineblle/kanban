@@ -1,7 +1,17 @@
-<div id="uniqueColumn"> 
-    <h4 id="titleColumn">{{column.title}}</h4>
-    <div id="list">
-        <app-card [ticket]="tickets[0]" />
-    </div>
-    <button id="addTicketColumnButton" (click)="addTicket.emit()">Add Ticket</button>
+<div id="uniqueColumn">
+  <h4 id="titleColumn">{{ column.title }}</h4>
+  <div id="list" appDroppable [columnId]="column.id" (dropItem)="reorderTicket.emit($event)">
+    @for( ticket of tickets; track ticket.id) {
+      <app-card [ticket]="ticket" 
+      appDraggable
+      [appDraggableData]="{
+        id: ticket.id,
+        columnId: column.id
+      }"
+      />
+    } @empty {
+    <p>No tickets</p>
+    }
+  </div>
+  <button id="addTicketColumnButton" (click)="addTicket.emit()">Add Ticket</button>
 </div>
