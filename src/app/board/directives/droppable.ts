@@ -1,17 +1,14 @@
-import { ContentChild, Directive, EventEmitter, HostListener, Input, Output, QueryList } from '@angular/core';
+import { ContentChild, Directive, HostListener, input, output, QueryList } from '@angular/core';
 import { REORDER_DROP_DATATYPE } from '../constants';
 import { Draggable } from './draggable';
+import { DragDropPayload } from '../models';
 
 @Directive({
   selector: '[appDroppable]'
 })
 export class Droppable {
-@Input({required: true})
-columnId!: string;
-
-@Output()
-dropItem = new EventEmitter();
-
+  columnId = input.required<string>();
+  dropItem = output<DragDropPayload>();
   @ContentChild(Draggable)
   draggables!: QueryList<Draggable>;
 
@@ -24,25 +21,20 @@ dropItem = new EventEmitter();
   onDrop(event: DragEvent) {
     event.preventDefault();
     const dt = event.dataTransfer;
-
     if(!dt?.types.includes(REORDER_DROP_DATATYPE)) {
       return;
     }
-
     const data = dt.getData(REORDER_DROP_DATATYPE);
     let destination = {
       id: '',
-      columnId: this.columnId,
+      columnId: this.columnId(),
     };
-
-this.draggables.forEach((draggable) => {
+    this.draggables.forEach((draggable) => {
       if (draggable.hasDragEntered) {
-        destination = draggable.appDraggableData;
+        destination = draggable.appDraggableData();
       }
-
       draggable.reset();
     });
-
     try {
       const parsedData = JSON.parse(data);
       this.dropItem.emit([
@@ -54,15 +46,10 @@ this.draggables.forEach((draggable) => {
           columnId: destination.columnId,
           ticketId: destination.id,
         }
-      ])
-
-
+      ]);
       console.log(parsedData);
     } catch (err: unknown) {
       return;
     }
   }
-
-  constructor() { }
-
 }

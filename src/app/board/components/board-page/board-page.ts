@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { ColumnComponent } from '../column-component/column-component';
-import { allBoard } from '../../data';
+import { getData } from '../../data';
 import { Column, DragDropLocation, Ticket } from '../../models';
 
 
@@ -12,11 +12,29 @@ import { Column, DragDropLocation, Ticket } from '../../models';
 })
 export class BoardPage {
 
-  columns = allBoard.columns;
-  ticketByColumnId: Record<string, Ticket[]> = {};
+  private ticketList = signal<Ticket[]>([]);
+
+  columns = signal<Column[]>([]);
+  ticketByColumnId = computed(() => {
+    const columns = this.columns();
+    const tickets = this.ticketList();
+    return this.getTicketsMap(columns, tickets);
+  });
+  isLoadingBoard = signal<boolean>(false);
+  hasError = signal<boolean>(false);
 
   constructor() {
-    this.ticketByColumnId = this.getTicketsMap(allBoard.columns, allBoard.tickets);
+    this.isLoadingBoard.set(true);
+    this.hasError.set(false);
+    getData()
+      .finally(() => this.isLoadingBoard.set(false))
+      .then(
+        ({columns, tickets}) => {
+          this.columns.set(columns);
+          this.ticketList.set(tickets);
+        },
+        (err) => this.hasError.set(true)
+      );
   }
 
   addTicket(columnId: string) {
@@ -37,22 +55,25 @@ export class BoardPage {
       }
     }
 
-    const fromTicket = this.ticketByColumnId[from.columnId].find((t) => t.id === from.ticketId);
-    const toTicket = this.ticketByColumnId[to.columnId].find((t) => t.id === to.ticketId);
+    const ticketsMap = this.ticketByColumnId();
+    const ticketList = this.ticketList();
+
+    const fromTicket = ticketsMap[from.columnId].find((t) => t.id === from.ticketId);
+    const toTicket = ticketsMap[to.columnId].find((t) => t.id === to.ticketId);
 
     const newOrder = toTicket?.order || 1;
     if(!fromTicket) return;
     if(from.columnId !== to.columnId) {
       shift(
-        this.ticketByColumnId[from.columnId],
+        ticketsMap[from.columnId],
         false,
         fromTicket.order
       );
-      shift(this.ticketByColumnId[to.columnId], true, newOrder);
+      shift(ticketsMap[to.columnId], true, newOrder);
     } else {
       const isGoingUp = fromTicket.order > newOrder;
       shift(
-        this.ticketByColumnId[to.columnId],
+        ticketsMap[to.columnId],
         isGoingUp,
         Math.min(fromTicket.order, newOrder),
         Math.max(fromTicket.order, newOrder)
@@ -62,10 +83,8 @@ export class BoardPage {
     fromTicket.order = newOrder;
     fromTicket.columnId = to.columnId;
 
-    this.ticketByColumnId = this.getTicketsMap(
-      allBoard.columns,
-      allBoard.tickets
-    );
+    this.ticketList.set([...ticketList])
+
   }
 
   private getTicketsMap (columns: Column[], tickets: Ticket[]) {
