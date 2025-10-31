@@ -1,12 +1,12 @@
 <div id="uniqueColumn">
-  <h4 id="titleColumn">{{ column.title }}</h4>
-  <div id="list" appDroppable [columnId]="column.id" (dropItem)="reorderTicket.emit($event)">
-    @for( ticket of tickets; track ticket.id) {
+  <h4 id="titleColumn">{{ column().title }}</h4>
+  <div id="list" appDroppable [columnId]="column().id" (dropItem)="reorderTicket.emit($event)">
+    @for( ticket of tickets(); track ticket.id) {
       <app-card [ticket]="ticket" 
       appDraggable
       [appDraggableData]="{
         id: ticket.id,
-        columnId: column.id
+        columnId: column().id
       }"
       />
     } @empty {

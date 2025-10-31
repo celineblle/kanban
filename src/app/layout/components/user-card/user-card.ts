@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class UserCard {
 
-  @Input() username: string = '';
-  @Output() toggleAuth: EventEmitter<void> = new EventEmitter();
+  username = input<string>('');
+  toggleAuth = output<void>();
 
   get isConnected() {
     return !!this.username;

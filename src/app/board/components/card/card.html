@@ -1,4 +1,4 @@
-<div id="uniqueCard" [class]="ticket.type">
-    <h4 id="ticketTitle">{{ticket.title|titleLimiter}}</h4>
-    <span>{{ticket.assignee || 'unassigned'}}</span>
+<div id="uniqueCard" [class]="ticket().type">
+    <h4 id="ticketTitle">{{ticket().title|titleLimiter}}</h4>
+    <span>{{ticket().assignee || 'unassigned'}}</span>
 </div>
