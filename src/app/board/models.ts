@@ -19,6 +19,10 @@ export type Column = {
 export type ColumnWithTickets = Column & { tickets: Ticket[] };
 
 export type Board = { columns: Column[]; tickets: Ticket[] };
+export type BoardGroupped = {
+  columns: Column[];
+  tickets: Record<string, Ticket[]>;
+};
 
 export type DragDropLocation = {
   columnId: string;
@@ -29,3 +33,6 @@ export type DragDropPayload = [
   DragDropLocation, 
   DragDropLocation
 ];
+
+export type GetBoardResponse = {board: Board};
+export type CreateTicketResponse = {createdTicket: Ticket};

@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -10,8 +10,5 @@ export class UserCard {
 
   username = input<string>('');
   toggleAuth = output<void>();
-
-  get isConnected() {
-    return !!this.username;
-  }
+  isConnected = computed(() => !!this.username());
 }

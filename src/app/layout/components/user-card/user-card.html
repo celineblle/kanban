@@ -3,6 +3,6 @@
 <button
 id="logginUserCardButton"
 (click)="toggleAuth.emit()"
-[class]="isConnected ? 'connected' : '' "
->{{isConnected ? 'Log out' : 'Log in'}}</button>
+[class]="isConnected() ? 'connected' : '' "
+>{{isConnected() ? 'Log out' : 'Log in'}}</button>
 </div>
