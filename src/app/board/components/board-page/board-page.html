@@ -1,4 +1,7 @@
 <div id="wrapperAllColumn">
+  @if(!isUserConnected()) {
+    <span>Please log in</span>
+  } @else {
   <div id="column-wrapper">
     @if(isLoadingBoard()) {
     <p>Loading...</p>
@@ -17,4 +20,5 @@
 
     } } }
   </div>
+  }
 </div>

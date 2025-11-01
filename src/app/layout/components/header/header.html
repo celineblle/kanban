@@ -1,4 +1,4 @@
 <div id="headerComponent">
-    <app-nav-menu [isAdmin]="isUserAdmin" />
-    <app-user-card (toggleAuth)="onToggleAuth()" />
+    <app-nav-menu [isAdmin]="isUserAdmin()" />
+    <app-user-card (toggleAuth)="onToggleAuth()" [username]="userName()"/>
 </div>
