@@ -1,4 +1,17 @@
 <div id="headerComponent">
     <app-nav-menu [isAdmin]="isUserAdmin()" />
     <app-user-card (toggleAuth)="onToggleAuth()" [username]="userName()"/>
+    @if(isLoginFormVisible()) {
+        <div class="modal-wrapper">
+        <div class="modal-body">
+            <app-login-form
+            (submitForm)="onSubmitForm($event)"
+            (close)="isLoginFormVisible.set(false)"
+            [isLoading]="isLoggingin()"
+            [error]="loginError()"
+            />
+        </div>
+        </div>
+    }
+
 </div>

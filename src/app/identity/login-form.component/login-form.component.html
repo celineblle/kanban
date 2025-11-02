@@ -1,0 +1,31 @@
+    <div id="wrapper">
+      <h3>Login</h3>
+      <span>Log in to access the kanban board</span>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="control-wrapper">
+          <div class="field">
+            <label>Email :</label>
+            <input formControlName="email" type="email" />
+          </div>
+          <span class="error">{{
+            getControlErrors('email') | formErrorsMessage : ERROR_MESSAGES
+          }}</span>
+        </div>
+        <div class="control-wrapper">
+          <div class="field">
+            <label>Password :</label>
+            <input formControlName="password" type="password" />
+          </div>
+          <span class="error">{{
+            getControlErrors('password') | formErrorsMessage : ERROR_MESSAGES
+          }}</span>
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="isLoading() || form.invalid">Log in</button>
+          <button type="button" [disabled]="isLoading()" (click)="onCancel()">Cancel</button>
+        </div>
+        @if(error(); as errorMessage){
+        <p class="error">{{ errorMessage }}</p>
+        }
+      </form>
+    </div>
