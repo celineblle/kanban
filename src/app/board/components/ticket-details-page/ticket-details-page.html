@@ -1,0 +1,72 @@
+<div id="wrapper">
+    @if(currentTicket.isLoading()) {
+        <p>Loading ...</p>
+    } @else {
+        @let ticket = currentTicket.value();
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+            <section>
+                <h4>Title</h4>
+                @if(isFormMode()) {
+                    <input formControlName="title" />
+                    <span class="error">
+                        {{getControlErrors('title') | formErrorsMessage : ERROR_MESSAGES}}
+                    </span>
+                } @else {
+                    <span>{{ticket?.title}}</span>
+                }
+            </section>
+            <section>
+                <h4>Description</h4>
+                @if(isFormMode()) {
+                    <textarea formControlName="description" ></textarea>
+                    <span class="error">
+                        {{getControlErrors('description') | formErrorsMessage : ERROR_MESSAGES}}
+                    </span>
+                } @else {
+                    <span>{{ticket?.description}}</span>
+                }
+            </section>
+            <section>
+                <h4>Type</h4>
+                @if(isFormMode()) {
+                    <select formControlName="type" >
+                        @for(option of ticketTypes; track option) {
+                            <option [value]="option">
+                                {{option}}
+                            </option>
+                        }
+                    </select>
+                    <span class="error">
+                        {{getControlErrors('type') | formErrorsMessage : ERROR_MESSAGES}}
+                    </span>
+                } @else {
+                    <span>{{ticket?.type}}</span>
+                }
+            </section>
+            <section>
+                <h4>Assigned to</h4>
+                @if(isFormMode()) {
+                    <input formControlName="assignee" />
+                    <span class="error">
+                        {{getControlErrors('assignee') | formErrorsMessage : ERROR_MESSAGES}}
+                    </span>
+                } @else {
+                    <span>{{ticket?.assignee}}</span>
+                }
+            </section>
+            <div class="actions">
+                @if(isFormMode()) {
+                    <button
+                    type="submit"
+                    [disabled]="isActionLoading() || form.invalid"
+                    >
+                    Submit
+                    </button>
+                    <button type="button" (click)="onCancel()">Cancel</button>
+                } @else {
+                    <button type="button" (click)="onEdit()">Edit</button>
+                }
+            </div>
+        </form>
+    }
+</div>

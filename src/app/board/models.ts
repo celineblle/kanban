@@ -1,4 +1,5 @@
-type TicketType = 'bug' | 'feature' | 'task';
+export const TICKET_TYPES = ['bug', 'feature', 'task'] as const;
+export type TicketType = (typeof TICKET_TYPES) [number];
 
 export type Ticket = {
   id: string;
@@ -36,3 +37,5 @@ export type DragDropPayload = [
 
 export type GetBoardResponse = {board: Board};
 export type CreateTicketResponse = {createdTicket: Ticket};
+
+export type TicketEditionCreation = Omit<Ticket, 'id' | 'order'> & {id: string | undefined};
